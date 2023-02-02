@@ -14,7 +14,7 @@ function checksExistsUserAccount(request, response, next) {
   const { username } = request.headers;
   const user = users.find(user => user.username === username );
   if (!user) {
-    return response.status(400).json({ error: "User not found" });
+    return response.status(404).json({ error: "User not found" });
   }
   request.user = user;
   return next();
@@ -92,7 +92,7 @@ app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
 
   const todo = user.todos.find(todo => todo.id === id);
   user.todos.splice(todo, 1);
-  
+
   return response.status(200).json(user.todos);
 });
 
